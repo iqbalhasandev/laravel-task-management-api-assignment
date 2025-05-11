@@ -1,61 +1,214 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Task Management API
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+A RESTful API built with Laravel for managing tasks efficiently. This API provides a comprehensive solution for task management with features including user authentication, task CRUD operations, task assignments, filtering, and more.
 
-## About Laravel
+## Features
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+### User Authentication
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+-   Secure authentication using Laravel Sanctum
+-   Endpoints for registration, login, and logout
+-   Protected routes ensuring only authenticated users can access tasks
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### Task Management
 
-## Learning Laravel
+-   Complete CRUD operations for tasks
+-   Task fields include title, description, due date, status, and priority
+-   Ownership tracking (tasks belong to their creator)
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### Task Assignment
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+-   Ability to assign tasks to other users
+-   Many-to-many relationship between tasks and assignees
+-   API endpoint for task assignment
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### Advanced Filtering & Sorting
 
-## Laravel Sponsors
+-   Filter tasks by status, priority, and due date
+-   Sort tasks by various fields (e.g., due date, creation time)
+-   Pagination support with 10 tasks per page
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+### Validation & Error Handling
 
-### Premium Partners
+-   Comprehensive form request validation
+-   Consistent JSON error responses
+-   Proper HTTP status codes for different scenarios
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development/)**
-- **[Active Logic](https://activelogic.com)**
+## API Endpoints
 
-## Contributing
+For detailed API documentation and testing, you can use our Postman collection:
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+📚 **[Postman Documentation](https://documenter.getpostman.com/view/40117056/2sB2jAa7Pj)**
 
-## Code of Conduct
+### Authentication
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+-   `POST /api/v1/register` - Register a new user
+-   `POST /api/v1/login` - Login a user
+-   `POST /api/v1/logout` - Logout the authenticated user (requires authentication)
 
-## Security Vulnerabilities
+### Task Management
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+-   `GET /api/v1/tasks` - List all tasks for the authenticated user
+-   `POST /api/v1/tasks` - Create a new task
+-   `GET /api/v1/tasks/{id}` - View a specific task
+-   `PUT /api/v1/tasks/{id}` - Update a task
+-   `DELETE /api/v1/tasks/{id}` - Delete a task
+-   `POST /api/v1/tasks/{id}/assign` - Assign a task to another user
+
+## Setup and Installation
+
+### Prerequisites
+
+-   PHP 8.1+
+-   Composer
+-   MySQL or any compatible database
+
+### Installation Steps
+
+1. Clone the repository
+
+    ```
+    git clone https://github.com/iqbalhasandev/laravel-task-management-api-assignment.git
+    cd laravel-task-management-api-assignment
+    ```
+
+2. Install dependencies
+
+    ```
+    composer install
+    ```
+
+3. Configure environment variables
+    ```
+    cp .env.example .env
+    php artisan key:generate
+    ```
+4. Configure your database in the `.env` file
+
+    ```
+    DB_CONNECTION=mysql
+    DB_HOST=127.0.0.1
+    DB_PORT=3306
+    DB_DATABASE=task_management
+    DB_USERNAME=your_username
+    DB_PASSWORD=your_password
+    ```
+
+5. Run migrations
+
+    ```
+    php artisan migrate
+    ```
+
+6. (Optional) Seed the database with sample data
+
+    ```
+    php artisan db:seed
+    ```
+
+7. Start the development server
+    ```
+    php artisan serve
+    ```
+
+## Using the API
+
+### Authentication
+
+#### Register a new user
+
+```
+POST /api/v1/register
+Content-Type: application/json
+
+{
+    "name": "John Doe",
+    "email": "john@example.com",
+    "password": "password123",
+    "password_confirmation": "password123"
+}
+```
+
+#### Login
+
+```
+POST /api/v1/login
+Content-Type: application/json
+
+{
+    "email": "john@example.com",
+    "password": "password123"
+}
+```
+
+Response will include an authentication token:
+
+```
+{
+    "success": true,
+    "message": "Logged in successfully",
+    "data": {
+        "id": 1,
+        "name": "John Doe",
+        "email": "john@example.com",
+        "token": "your-auth-token"
+    }
+}
+```
+
+### Making Authenticated Requests
+
+Include the token in the Authorization header:
+
+```
+Authorization: Bearer your-auth-token
+```
+
+### Working with Tasks
+
+#### Create a task
+
+```
+POST /api/v1/tasks
+Authorization: Bearer your-auth-token
+Content-Type: application/json
+
+{
+    "title": "Complete project documentation",
+    "description": "Create detailed API documentation for the project",
+    "due_date": "2025-05-20",
+    "status": "Todo",
+    "priority": "High"
+}
+```
+
+#### List tasks with filtering and sorting
+
+```
+GET /api/v1/tasks?status=Todo&priority=High&sort=-due_date
+Authorization: Bearer your-auth-token
+```
+
+#### Assign a task to another user
+
+```
+POST /api/v1/tasks/1/assign
+Authorization: Bearer your-auth-token
+Content-Type: application/json
+
+{
+    "user_id": 2
+}
+```
+
+## Testing
+
+Run the test suite using PHPUnit:
+
+```
+php artisan test
+```
 
 ## License
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+This project is open-source software licensed under the [MIT license](https://opensource.org/licenses/MIT).
