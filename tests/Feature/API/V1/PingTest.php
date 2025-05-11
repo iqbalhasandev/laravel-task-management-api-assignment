@@ -20,16 +20,16 @@ class PingTest extends TestCase
                 'data' => [
                     'timestamp',
                     'version',
-                    'health'
-                ]
+                    'health',
+                ],
             ])
             ->assertJson([
                 'success' => true,
                 'message' => 'API is up and running',
                 'data' => [
                     'health' => 'ok',
-                    'version' => '1.0.0'
-                ]
+                    'version' => '1.0.0',
+                ],
             ]);
     }
 }
